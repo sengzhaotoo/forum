@@ -1,0 +1,43 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+input[type=checkbox][disabled]{
+    background-color: #aaa;
+    color: grey;
+    border: 1px solid grey;
+}
+
+body {
+    background-color: #2c3338;
+    font: 400 0.875rem/1.5 "Open Sans", sans-serif;
+}
+
+.container {
+    margin: 15px; 
+    padding: 15px; 
+}
+
+
+
+h2 {
+    color: white; 
+    line-height: 40px;
+    text-align: center; 
+    text-transform: uppercase; 
+    font-size: 40px; 
+    text-decoration: none; 
+    
+}
+
+a {
+    color: white; 
+}
+
+p, form {
+    color: white; 
+    font-size: 15px; 
+}
+
