@@ -29,7 +29,6 @@ h2 {
     text-transform: uppercase; 
     font-size: 40px; 
     text-decoration: none; 
-    
 }
 
 a {
@@ -41,3 +40,14 @@ p, form {
     font-size: 15px; 
 }
 
+table {
+    border-collapse: collapse;
+}
+
+tr:nth-child(even){background-color: grey}
+
+th {
+    
+    background-color: #4CAF50;
+    color: white; 
+}
