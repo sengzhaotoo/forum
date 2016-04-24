@@ -1,0 +1,47 @@
+<!-- This HTML focuses on a single thread  --> 
+<!DOCTYPE HTML>
+<html> 
+    <head>
+        
+        <meta charset="UTF-8">
+        <title>Query</title>
+        <link rel="stylesheet" href="assets/css/profile.css"/>
+    </head>
+    
+    <body> 
+        <header>
+            <h2>
+                <a href="index.html" style = "text-decoration:none;">Connect</a>
+            </h2>
+        </header>
+        
+    <?php
+        require_once('assets/php/connection.php');
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none;" >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th><a href="assets/php/gp5.php?sorting=ASC&field=title">Thread Title</a></th>
+                <th>Message</th>
+                <th>Created by</th>
+                <th>Created when</th>
+            </tr>
+            ';
+        $id = oci_parse($conn, 'SELECT topic, message, created_by, created_when FROM THREADS');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                "<tr>
+                    <td>" . $row['TOPIC'] . "</td>
+                    <td>" . $row['MESSAGE'] . "</td>
+                    <td>" . $row['CREATED_BY'] . "</td>
+                    <td>" . $row['CREATED_WHEN'] . "</td>
+                </tr>";
+        }
+        echo '</table>';
+    ?>
+        
+    </body>
+</html>
