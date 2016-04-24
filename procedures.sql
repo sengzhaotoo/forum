@@ -1,27 +1,22 @@
-CREATE OR REPLACE PROCEDURE GENERATE_CREDENTIALS (p_id NUMBEr) AS
-    p_username person.username%type; 
-    p_password person.password%type;
-    p_year_begin person.year_begin%type;
-    BEGIN
-        SELECT p.name, p.year_begin INTO p_username, p_year_begin from PERSON p WHERE p.id = p_id;
-        p_username := p_username || p_year_begin; 
-        p_password := 'default1234'; -- a default password
-        INSERT INTO PERSON(username, password) VALUES (p_username, p_password); 
-    END;
+create sequence person_seq;
 
-CREATE OR REPLACE PROCEDURE REGISTRATION(p_id INTEGER) AS  
-    p_name person.name%type;
-    p_email person.email%type;
-    p_year_begin person.year_begin%type;
-    p_semester_begin person.semester_begin%type;
-    p_degree_status person.degree_status%type; 
-    p_role person.role%type;
-    p_gpa person.gpa%type;
-    BEGIN
-        BEGIN
-          EXEC GENERATE_CREDENTIALS(p_id);
-        END; 
-        INSERT INTO Person (id, name, email, year_begin, semester_begin, degree_status, role, gpa) VALUES (p_id, p_name, p_email, p_year_begin, p_semester_begin, p_degree_status, p_role, p_gpa);
+create or replace PROCEDURE REGISTRATION(
+    p_username person.username%type,
+    p_password person.password%type,
+    p_name person.name%type,
+    p_email person.email_address%type,
+    p_year_begin person.year_begin%type,
+    p_semester_begin person.semester_begin%type,
+    p_degree_status person.d_status%type,
+    p_degree_type person.d_type%type,
+    p_role person.role%type,
+    p_gpa person.gpa%type,
+    p_hide_profile person.hide_profile%type
+)
+    AS
+    BEGIN 
+        INSERT INTO Person (id, username, password, name, email_address, year_begin, semester_begin, d_status,d_type, role, gpa, hide_profile) 
+          VALUES (person_seq.nextval,p_username, p_password, p_name, p_email, p_year_begin, p_semester_begin, p_degree_status, p_degree_type, p_role, p_gpa, p_hide_profile);
     END; 
 
 CREATE OR REPLACE GENERATE_INTERESTS_GROUPS AS 
