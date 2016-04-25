@@ -88,6 +88,11 @@
                             echo "Trouble committing.";
                         }
                     }
+                } else {
+                    $message =  "You are not a teaching assistant for course " .  $_GET['course_id'] ;
+
+                    // Prints out alert message    
+                    echo "<script type='text/javascript'>alert('$message');</script>";
                 }
             }
         }

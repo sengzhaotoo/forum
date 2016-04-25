@@ -28,18 +28,24 @@
                 <th>Created when</th>
             </tr>
             ';
+        
+        // Queries for data to be shown 
         $id = oci_parse($conn, 'SELECT topic, message, created_by, created_when FROM THREADS');
         oci_execute($id, OCI_DEFAULT);
 
         // This queries data 
         while(($row=oci_fetch_assoc($id))!=false){
             echo
-                "<tr>
-                    <td>" . $row['TOPIC'] . "</td>
-                    <td style='text-align:left;'>" . $row['MESSAGE'] . "<button style =\"text-align:right\">edit</button></td>
-                    <td>" . $row['CREATED_BY'] . "</td>
-                    <td>" . $row['CREATED_WHEN'] . "</td>
-                </tr>";
+                '<tr>
+                    <td>' . $row['TOPIC'] . '</td>
+                    <td style="text-align:left;">' . $row['MESSAGE'] . 
+                    // Clickable Button 
+                        '<form action = "assets/php/gp5.php">
+                            <button style="float: right;">edit</button></td>
+                        </form>
+                    <td>' . $row['CREATED_BY'] . '</td>
+                    <td>' . $row['CREATED_WHEN'] . '</td>
+                </tr>';
         }
         echo '</table>';
     ?>

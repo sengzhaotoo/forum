@@ -1,13 +1,5 @@
 <?php
-    // Connect to the database
-    $db = "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=fourier.cs.iit.edu)(PORT=1521)))(CONNECT_DATA=(SID=orcl)))";
-    $conn = oci_connect("stoo", "Sengzha0", $db);
-
-    // Error Message 
-    if (!$conn) {
-        $e = oci_error();
-        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-    } 
+    include('connection.php'); 
     
     /*********************/
     /* General Processes */
@@ -15,8 +7,8 @@
 
     // 5. Demonstrate the process of modifying and filtering messages.
     
-    // First, query the message and display
-    $sort = 'ASC'; 
+    // Edit Message 
+    
 
     if(isset($_GET['sorting'])){
         if($_GET['sorting']=='ASC'){
@@ -40,11 +32,15 @@
         $stdid = oci_parse($conn, 'SELECT t.topic, t.message, t.created_by, t.created_when FROM THREADS t ORDER BY :field :sort');
         oci_bind_by_name($stdid, ":field", $field);
         /*oci_bind_by_name($stdid, ":sort", $sort);  // this has problem idk why*/
+    } else {
+        echo "this works!";
+    }
+
+    // Filtering message: search by certain keyword 
         
-    } 
-
+$stdid = oci_parse($conn, 'SELECT message, created_by, created_when FROM THREADS WHERE ');
+        oci_bind_by_name($stdid, ":field", $field);
     
-
 
 
     // Then allow it to be modified (need a button or something)
