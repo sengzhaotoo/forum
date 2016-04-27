@@ -1,5 +1,14 @@
 <?php
-    include('connection.php'); 
+    // Connect to the database
+    $db = "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=fourier.cs.iit.edu)(PORT=1521)))(CONNECT_DATA=(SID=orcl)))";
+    $conn = oci_connect("stoo", "cs425", $db);
+
+    // Error Message 
+    if (!$conn) {
+        $e = oci_error();
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    } 
+    
     
     /*********************/
     /* General Processes */
@@ -7,48 +16,54 @@
 
     // 5. Demonstrate the process of modifying and filtering messages.
     
-    // Edit Message 
-    
+    // Gets the message from Javascript prompt and update database
+    if(isset($_POST['submit'])){
+        
+        // uhhhhh escape line isn't really working here, what? ._. 
+        /*$msg = oci_parse($conn, 'UPDATE THREADS SET message = :msg WHERE thread_id = :t_id');
+        $ph = '\'' . $_POST["msg"] . '\'';
+        echo $ph;
+        oci_bind_by_name($msg, ":msg", $ph);
+        oci_bind_by_name($msg, ":t_id", $_POST["t_id"]);
+        oci_execute($msg, OCI_DEFAULT);
+        oci_commit($conn);*/
+        
+        // Reloads the page 
+        header('Location: /fyp/query.html');
+    }
 
-    if(isset($_GET['sorting'])){
-        if($_GET['sorting']=='ASC'){
-            $sort = 'DESC';
-        } else if($_GET['sorting']=='DESC') {
-            $sort = 'ASC';
-        } else {
-            echo $_GET['sorting'] . "Sort is not working";
-        }
+    // Search (Filtering) -- TESTING PHASE 
+    // Allows case-insensitive
+    // DO NOT TOUCH THIS
+    if(isset($_POST['search'])){
+        // SELECT thread_id, topic, message, created_by, created_when FROM THREADS WHERE message LIKE :srch
+        // SELECT message FROM THREADS WHERE LOWER(message) LIKE LOWER(:srch)
+        /*$res = oci_parse($conn, "SELECT message FROM THREADS");
+        $srch = '\'%' . $_POST["searchMsg"] . '%\''; // % is a wildcard in SQL
+        oci_bind_by_name($res, ':srch', $srch);
+        oci_execute($res, OCI_DEFAULT);*/
         
-        if($_GET['field'] == 'title'){
-            $field = 'title';
-        } elseif ($_GET['field'] == 'message'){
-            $field = 'message';
-        } elseif ($_GET['field'] == 'createdBy'){
-            $field = 'createdBy';
-        } elseif ($_GET['field'] == 'timeCreated'){
-            $field = 'timeCreated';
-        }
+        $sql = "SELECT message FROM THREADS WHERE message LIKE :srch";
+        $srch = $_POST["searchMsg"] . '%\''; // % is a wildcard in SQL
         
-        $stdid = oci_parse($conn, 'SELECT t.topic, t.message, t.created_by, t.created_when FROM THREADS t ORDER BY :field :sort');
-        oci_bind_by_name($stdid, ":field", $field);
-        /*oci_bind_by_name($stdid, ":sort", $sort);  // this has problem idk why*/
-    } else {
-        echo "this works!";
+        echo $srch;
+        
+        $res = oci_parse($conn, $sql);
+        oci_bind_by_name($res, ':srch', $srch);
+        
+        oci_execute($res, OCI_DEFAULT);
+        
+        // Why didn't this return any results? 
+        while (($row = oci_fetch_assoc($res)) != false){
+            echo $_POST['searchMsg'];
+            echo "<br />" . $row['MESSAGE'] . " ";
+            
+        }
     }
 
     // Filtering message: search by certain keyword 
-        
-$stdid = oci_parse($conn, 'SELECT message, created_by, created_when FROM THREADS WHERE ');
-        oci_bind_by_name($stdid, ":field", $field);
     
-
-
-    // Then allow it to be modified (need a button or something)
-    // Modification should be having a popup textarea 
-
-    // Filtering (based on criteria – top 5, latest)
 
     // Closes connection to database 
     oci_close($conn);
-    /*header('Location: /fyp/profile.html');*/
 ?>
