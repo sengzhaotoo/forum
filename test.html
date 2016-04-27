@@ -1,0 +1,97 @@
+<!-- This HTML focuses on editing message --> 
+<!DOCTYPE HTML>
+<html> 
+    <head>
+        
+        <meta charset="UTF-8">
+        <title>GP5</title>
+        <link rel="stylesheet" href="assets/css/profile.css"/>
+        
+        <!-- Prompts user to edit message --> 
+        <script type="text/javascript">
+            function modify(id){ 
+                var msg = prompt("Please edit your message:");
+                window.alert(id);
+                document.getElementById("t_id").value = id;
+                document.getElementById("msg").value = msg;
+                document.getElementById("form").submit();
+            }
+        </script>
+    </head>
+    
+    <body> 
+        <header>
+            <h2>
+                <a href="index.html" style = "text-decoration:none;">Connect</a>
+            </h2>
+        </header>
+  
+    <?php
+        require_once('assets/php/connection.php');
+        
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Thread ID</th>
+                <th><a href="assets/php/gp5.php?sorting=ASC&field=title">Thread Title</a></th>
+                <th>Message</th>
+                <th>Created by</th>
+                <th>Created when</th>
+            </tr>
+            ';
+        // Queries for data to be shown 
+
+        // Search is used; Filtering message
+        if((isset($_GET['search']))){
+            // $sql = "SELECT thread_id, topic, message, created_by, created_when FROM THREADS WHERE message LIKE '% :msg %' ";
+            // $res = oci_parse($conn, $sql);
+            // oci_bind_by_name($conn, ":msg", $_GET['searchMsg']);
+            // echo $_GET['searchMsg'];
+        } else {
+            // $res = oci_parse($conn, 'SELECT thread_id, topic, message, created_by, created_when FROM THREADS');
+        }
+        $res = oci_parse($conn, 'SELECT thread_id, topic, message, created_by, created_when FROM THREADS');
+        oci_execute($res, OCI_DEFAULT);
+        
+        while(($row=oci_fetch_assoc($res))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['THREAD_ID'] . '</td>
+                    <td>' . $row['TOPIC'] . '</td>
+                    <td style="text-align:left;">' . $row['MESSAGE'] . 
+                    // Clickable Button 
+                        '<form method="POST" style="float: right; display:inline; appearance:button;" id="form" name="form">
+                            <input type="hidden" id = "t_id" name="t_id">
+                            <input type="hidden" id = "msg" name="msg">
+                            <input type="submit" value="edit message" name="submit" onclick="modify('.$row['THREAD_ID'].')">
+                        </form>
+                    </td>
+                    <td>' . $row['CREATED_BY'] . '</td>
+                    <td>' . $row['CREATED_WHEN'] . '</td>
+                </tr>';
+        }
+        
+        echo '</table>';
+                
+        /****************/
+        /* EDIT MESSAGE */
+        /****************/
+
+        if(isset($_POST['submit'])){
+            // uhhhhh escape line isn't really working here, what? ._. 
+            $msg = oci_parse($conn, 'UPDATE THREADS SET message = :msg WHERE thread_id = :t_id');
+            $ph = '\'' . $_POST["msg"] . '\'';
+            echo $ph;
+            oci_bind_by_name($msg, ":msg", $ph);
+            oci_bind_by_name($msg, ":t_id", $_POST["t_id"]);
+            oci_execute($msg, OCI_DEFAULT);
+            oci_commit($conn);
+
+            // Reloads the page 
+            // header('Location: /fyp/query.html');
+        }
+
+    ?>
+    </body>
+</html>

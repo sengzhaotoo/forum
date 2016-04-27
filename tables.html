@@ -1,0 +1,335 @@
+<!-- This HTML focuses on assigning moderators  --> 
+<!DOCTYPE HTML>
+<html> 
+    <head>
+        
+        <meta charset="UTF-8">
+        <title>Tables</title>
+        <link rel="stylesheet" href="assets/css/profile.css"/>
+    </head>
+    
+    <body> 
+        <header>
+            <h1>
+                <a href="index.html" style = "text-decoration:none;">Connect</a>
+            </h1>
+        </header>
+        
+        <h2>
+            <p style="margin-left:2%">Note: To make modification to the table(s), visit <em><a href="modification.html">here</a></em>.</p>
+        </h2>
+        
+    <?php
+        require_once('assets/php/connection.php');
+        
+        /**********/
+        /* PERSON */
+        /**********/
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">PERSON</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none;  " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Year Begin/Enrolled</th>
+                <th>Semester Begin/Enrolled</th>
+                <th>Degree Status</th>
+                <th>Degree Type</th>
+                <th>GPA</th>
+                <th>Role</th>
+                <th>Hide Profile</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT id, name, username, password, year_begin, semester_begin, d_status, d_type, gpa, role, hide_profile FROM PERSON ORDER BY ID ASC');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['ID'] . '</td>
+                    <td style ="text-align:left;">' . $row['NAME'] . '</td>
+                    <td>' . $row['USERNAME'] . '</td>
+                    <td>' . $row['PASSWORD'] . '</td>
+                    <td>' . $row['YEAR_BEGIN'] . '</td>
+                    <td>' . $row['SEMESTER_BEGIN'] . '</td>
+                    <td>' . $row['D_STATUS'] . '</td>
+                    <td>' . $row['D_TYPE'] . '</td>
+                    <td>' . $row['GPA'] . '</td>
+                    <td>' . $row['ROLE'] . '</td>
+                    <td>' . $row['HIDE_PROFILE'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+        /********************/
+        /* COURSE CATALOGUE */
+        /********************/
+
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">COURSE CATALOGUE</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Course Catalogue ID</th>
+                <th>Course Code</th>
+                <th>Course Title</th>
+                <th>Course Description</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM COURSE_CATALOGUE');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['CC_ID'] . '</td>
+                    <td>' . $row['COURSE_CODE'] . '</td>
+                    <td>' . $row['COURSE_TITLE'] . '</td>
+                    <td style="text-align:left; width: 75%;">' . $row['COURSE_DESCRIPTION'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+        /**********/
+        /* COURSE */
+        /**********/ 
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">COURSE</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Course ID</th>
+                <th>Course Catalogue ID</th>
+                <th>Year</th>
+                <th>Semester</th>
+                <th>Instructor</th>
+                <th>Average Past GPA</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM COURSE');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['COURSE_ID'] . '</td>
+                    <td>' . $row['CC_ID'] . '</td>
+                    <td>' . $row['YEAR'] . '</td>
+                    <td>' . $row['SEMESTER'] . '</td>
+                    <td>' . $row['INSTRUCTOR'] . '</td>
+                    <td>' . $row['AVG_PASTGPA'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+        /**********/
+        /* GROUPS */
+        /**********/
+
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">GROUPS</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Group ID</th>
+                <th>Group Name ID</th>
+                <th>Description</th>
+                <th>Moderator 1</th>
+                <th>Moderator 2</th>
+                <th>Course ID</th>
+                <th>Type</th>  
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM GROUPS');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['GROUP_ID'] . '</td>
+                    <td>' . $row['NAME'] . '</td>
+                    <td>' . $row['DESCRIPTION'] . '</td>
+                    <td>' . $row['MODERATOR1'] . '</td>
+                    <td>' . $row['MODERATOR2'] . '</td>
+                    <td>' . $row['COURSE_ID'] . '</td>
+                    <td>' . $row['TYPE'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+        /******************/
+        /* ADMINISTRATORS */
+        /******************/
+
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">ADMINISTRATORS</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Person ID</th>
+                <th>Access Level</th>
+                
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM ADMINISTRATORS ORDER BY PERSON_ID ASC');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['PERSON_ID'] . '</td>
+                    <td>' . $row['ACCESS_LEVEL'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+        /*******/
+        /* TA */
+        /******/
+
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">TEACHING ASSISTANT</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Person ID</th>
+                <th>Course ID</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM TA');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['PERSON_ID'] . '</td>
+                    <td>' . $row['COURSE_ID'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+        
+        /*********/
+        /* TAKES */
+        /*********/
+
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">STUDENT TAKES COURSES</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Person ID</th>
+                <th>Course ID</th>
+                <th>Grades</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM TAKES');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['PERSON_ID'] . '</td>
+                    <td>' . $row['COURSE_ID'] . '</td>
+                    <td>' . $row['GRADE'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+
+        /**********/
+        /* FORUMS */
+        /**********/
+
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">FORUMS</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Forum ID</th>
+                <th>Group ID</th>
+                <th>Forum Title</th>
+                <th>Created by</th>
+                <th>Created when</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM FORUMS');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['FORUM_ID'] . '</td>
+                    <td>' . $row['GROUP_ID'] . '</td>
+                    <td>' . $row['FORUM_TITLE'] . '</td>
+                    <td>' . $row['CREATED_BY'] . '</td>
+                    <td>' . $row['CREATED_WHEN'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+        /***********/
+        /* THREADS */
+        /***********/
+    
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">THREADS</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none;" >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th><a href="assets/php/gp5.php?sorting=ASC&field=title">Thread Title</a></th>
+                <th>Message</th>
+                <th>Created by</th>
+                <th>Created when</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT topic, message, created_by, created_when FROM THREADS');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['TOPIC'] . '</td>
+                    <td style="text-align:left; margin-left: inherit;">' . $row['MESSAGE'] . '</td>
+                    <td>' . $row['CREATED_BY'] . '</td>
+                    <td>' . $row['CREATED_WHEN'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+    ?>
+    </body>
+    
+    <footer>
+        <div style = "margin: 50px;">
+        </div>
+    </footer>
+</html>
