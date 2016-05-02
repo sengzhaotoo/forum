@@ -87,6 +87,12 @@ INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
 INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (73649182, 301, 'Industrial Psychology', 'Desc for PSYCH 301')
   
+  INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  VALUES (11111111, 000, 'Club', 'Club course code')
+  
+   INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  VALUES (22222222, 000, 'Interest', 'Interest group course code')
+  
 SELECT * FROM DUAL; 
 SELECT * FROM COURSE_CATALOGUE;
 
@@ -107,24 +113,30 @@ INSERT ALL
     INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
   VALUES (62821843, 46192837, TO_DATE('2015', 'YYYY'), 'Fall', 'Matthew J. Bauer', 3.6)
   
+    INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
+  VALUES (11111111, 11111111, TO_DATE('2015', 'YYYY'), 'Fall', 'Club', 0.0)
+  
+   INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
+  VALUES (22222222, 22222222, TO_DATE('2015', 'YYYY'), 'Fall', 'Interest', 0.0)
+
 SELECT * FROM DUAL; 
 
 /* GROUPS */
 INSERT ALL 
   INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
-  VALUES (98743125, 'Video Gaming', 'An interest club that unites all gamers!', 20352412, 89123456, 62821843, 'interest')
+  VALUES (98743125, 'Video Gaming', 'An interest club that unites all gamers!', 20352412, 89123456, 22222222, 'interest')
   
   INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
-  VALUES (87126817, 'Music', 'Group for Music Club', 56789123, null, 62821843, 'club')
+  VALUES (87126817, 'Music', 'Group for Music Club', 56789123, null, 11111111, 'club')
   
   INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
-  VALUES (83942915, 'CS Majors', 'For CS Majors', 97234567, null, 62821843, 'course')
+  VALUES (83942915, 'CS Majors', 'For CS Majors', 97234567, null, 11111111, 'course')
 
 INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
-  VALUES (42119356, 'Fine Arts Major', 'For Fine Arts Majors', 56789123, 67891234, 62821843, 'course')
+  VALUES (42119356, 'Fine Arts Major', 'For Fine Arts Majors', 56789123, 67891234, 11111111, 'course')
   
   INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
-  VALUES (53879124, 'CS 425', 'Group for CS 425', 72918456, null, 62821843, 'interest')
+  VALUES (53879124, 'CS 425', 'Group for CS 425', 72918456, null, 36912457, 'course')
 SELECT * FROM DUAL;
 
 select * from groups;
