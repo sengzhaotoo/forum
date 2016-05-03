@@ -69,7 +69,6 @@ CREATE TABLE MODERATORS(
     FOREIGN KEY(group_id) REFERENCES GROUPS(group_id)
 );
 
-
 CREATE TABLE ADMINISTRATORS(
     person_id INTEGER, 
     access_level VARCHAR(10),
@@ -81,7 +80,9 @@ CREATE TABLE TA(
     person_id INTEGER,
     course_id INTEGER,
     CONSTRAINT pk_ta
-      PRIMARY KEY (person_id, course_id)
+      PRIMARY KEY (person_id, course_id),
+    FOREIGN KEY (person_id) REFERENCES PERSON(id),
+    FOREIGN KEY (person_id) REFERENCES COURSE(course_id)
 );
 
 CREATE TABLE TAKES(
