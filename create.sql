@@ -51,8 +51,6 @@ CREATE TABLE GROUPS(
     group_id INTEGER NOT NULL, 
     name VARCHAR(50),
     description VARCHAR (500), 
-    moderator1 INTEGER, 
-    moderator2 INTEGER, 
     course_id INTEGER, 
     type VARCHAR(10),
     PRIMARY KEY (group_id), 
@@ -60,6 +58,17 @@ CREATE TABLE GROUPS(
     CONSTRAINT chk_type
       CHECK (type IN ('interest', 'club', 'course'))
 );
+
+-- For easier control over the moderator columns to better suit SQL no. 5
+CREATE TABLE MODERATORS(
+    p_id INTEGER,
+    group_id,
+    CONSTRAINT pk_moderators
+      PRIMARY KEY (p_id, group_id),
+    FOREIGN KEY (p_id) REFERENCES PERSON(id),
+    FOREIGN KEY(group_id) REFERENCES GROUPS(group_id)
+);
+
 
 CREATE TABLE ADMINISTRATORS(
     person_id INTEGER, 
