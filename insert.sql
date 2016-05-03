@@ -49,10 +49,6 @@ INSERT ALL
     VALUES (72918456, 'fleung', 'password', 'Francis Leung', 'fleung@hawk.iit.edu', TO_DATE('2015','YYYY'), 'Fall', NULL , 'Science', 4.0, 'Professor', 'True')  
 SELECT * from DUAL; 
 
-delete from person;
-select * from person; 
-select * from all_tables;
-
 /* COURSE CATALOGUE*/
 INSERT ALL 
   INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
@@ -159,12 +155,6 @@ INSERT ALL
   INTO MODERATORS(p_id, group_id)
   VALUES (72918456, 53879124)
 SELECT * FROM DUAL; 
-
-select * from groups;
-select group_id from groups where course_id = 62821843; 
-select g.moderator1, g.name from groups g;
-
-drop table groups;
 
 /* TA */
 INSERT ALL 
