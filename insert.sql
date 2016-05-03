@@ -69,32 +69,30 @@ INSERT ALL
   and software documentation. Designed for students who have had little or no prior experience with computer programming. 
   For students in CS and CS-related degree programs.')
   
- INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (19283746, 425, 'Database Organization', 'Description for cs 425')
   
   INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
-    VALUES (28374619, 115, 'Human Biology', 'BIO 115')
+  VALUES (28374619, 115, 'Human Biology', 'BIO 115')
 
-INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (37461928, 305, 'Design of Business Processes and Models', 'Dec for BUS 305')
   
-INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (46192837, 330, 'Discrete Structures', 'Description for CS 330')
   
-INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (91827364, 350, 'Computer Organization and Assembly Language Programming', 'Description for cs 350')
   
-INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (73649182, 301, 'Industrial Psychology', 'Desc for PSYCH 301')
   
   INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (11111111, 000, 'Club', 'Club course code')
   
-   INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
+  INTO COURSE_CATALOGUE(cc_id, course_code, course_title, course_description)
   VALUES (22222222, 000, 'Interest', 'Interest group course code')
-  
-SELECT * FROM DUAL; 
-SELECT * FROM COURSE_CATALOGUE;
+SELECT * FROM DUAL;
 
 /* COURSE */
 INSERT ALL
@@ -104,27 +102,26 @@ INSERT ALL
   INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
   VALUES (14710693, 28374619, TO_DATE('2015', 'YYYY'), 'Spring', 'Sylvester Stalone', 2.8)
   
-    INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
+  INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
   VALUES (49235342, 37461928, TO_DATE('2015', 'YYYY'), 'Fall', 'Matthew J. Bauer', 3.0)
   
-    INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
+  INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
   VALUES (92456132, 91827364, TO_DATE('2015', 'YYYY'), 'Fall', 'Francis Leung', 2.6)
   
-    INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
+  INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
   VALUES (62821843, 46192837, TO_DATE('2015', 'YYYY'), 'Fall', 'Matthew J. Bauer', 3.6)
   
-    INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
+  INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
   VALUES (11111111, 11111111, TO_DATE('2015', 'YYYY'), 'Fall', 'Club', 0.0)
   
-   INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
+  INTO COURSE (course_id, cc_id, year, semester, instructor, avg_pastGPA)
   VALUES (22222222, 22222222, TO_DATE('2015', 'YYYY'), 'Fall', 'Interest', 0.0)
-
 SELECT * FROM DUAL; 
 
 /* GROUPS */
 INSERT ALL 
-  INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
-  VALUES (98743125, 'Video Gaming', 'An interest club that unites all gamers!', 20352412, 89123456, 22222222, 'interest')
+  INTO GROUPS(group_id, name, description, course_id, type)
+  VALUES (98743125, 'Video Gaming', 'An interest club that unites all gamers!', 22222222, 'interest')
   
   INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
   VALUES (87126817, 'Music', 'Group for Music Club', 56789123, null, 11111111, 'club')
@@ -132,12 +129,36 @@ INSERT ALL
   INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
   VALUES (83942915, 'CS Majors', 'For CS Majors', 97234567, null, 11111111, 'course')
 
-INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
-  VALUES (42119356, 'Fine Arts Major', 'For Fine Arts Majors', 56789123, 67891234, 11111111, 'course')
+INTO GROUPS(group_id, name, description, course_id, type)
+  VALUES (42119356, 'Fine Arts Major', 'For Fine Arts Majors', 11111111, 'course')
   
   INTO GROUPS(group_id, name, description, moderator1, moderator2, course_id, type)
   VALUES (53879124, 'CS 425', 'Group for CS 425', 72918456, null, 36912457, 'course')
 SELECT * FROM DUAL;
+
+/* MODERATORS */
+INSERT ALL 
+  INTO MODERATORS(p_id, group_id)
+  VALUES (20352412, 98743125)
+  
+  INTO MODERATORS(p_id, group_id)
+  VALUES (89123456, 98743125)
+  
+  INTO MODERATORS(p_id, group_id)
+  VALUES (56789123, 87126817)
+  
+  INTO MODERATORS(p_id, group_id)
+  VALUES (97234567, 83942915)
+  
+  INTO MODERATORS(p_id, group_id)
+  VALUES (56789123, 42119356)
+  
+  INTO MODERATORS(p_id, group_id)
+  VALUES (67891234, 42119356)
+  
+  INTO MODERATORS(p_id, group_id)
+  VALUES (72918456, 53879124)
+SELECT * FROM DUAL; 
 
 select * from groups;
 select group_id from groups where course_id = 62821843; 
@@ -147,8 +168,8 @@ drop table groups;
 
 /* TA */
 INSERT ALL 
-    INTO TA(person_id, course_id)
-    VALUES(20352412, 110) 
+  INTO TA(person_id, course_id)
+  VALUES(20352412, 110) 
 SELECT * FROM DUAL; 
 
 /* ADMINISTRATORS */
@@ -251,19 +272,6 @@ INTO Privacy(user_id, year_beg, sem_beg, d_status, d_type, gpa)
   
   INTO Privacy(user_id, year_beg, sem_beg, d_status, d_type, gpa)
   VALUES (72918456, 1, 1, 0, 1,1)
-
-SELECT * FROM DUAL;
-
-drop table threads;
-select * from administrators;
-select * from course;
-select * from groups;
-select * from person;
-select * from ta;
-select * from takes;
-select * from FORUMS;
-select * from threads;
-
 
 -- QUERY 
 SELECT instructor, AVG(avg_pastGPA) FROM COURSE
