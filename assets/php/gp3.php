@@ -59,6 +59,6 @@
         
         // Closes connection to database 
         oci_close($conn);     
-        header('Location: /fyp/profile.html');
+        header('Location: /fyp/tables.html');
     }
 ?>
