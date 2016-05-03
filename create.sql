@@ -45,8 +45,6 @@ CREATE TABLE COURSE(
       CHECK (semester IN ('Spring','Summer','Fall'))
 );
 
-drop table course cascade constraints;
-
 CREATE TABLE GROUPS(
     group_id INTEGER NOT NULL, 
     name VARCHAR(50),
@@ -65,6 +63,16 @@ CREATE TABLE MODERATORS(
     group_id,
     CONSTRAINT pk_moderators
       PRIMARY KEY (p_id, group_id),
+    FOREIGN KEY (p_id) REFERENCES PERSON(id),
+    FOREIGN KEY(group_id) REFERENCES GROUPS(group_id)
+);
+
+-- A list of all members in different groups 
+CREATE TABLE GROUP_MEMBERS(
+    p_id INTEGER, 
+    group_id INTEGER,
+    CONSTRAINT pk_group_members
+        PRIMARY KEY(p_id) REFERENCES PERSON(id),
     FOREIGN KEY (p_id) REFERENCES PERSON(id),
     FOREIGN KEY(group_id) REFERENCES GROUPS(group_id)
 );
@@ -127,12 +135,3 @@ CREATE TABLE PRIVACY(
     gpa INTEGER CHECK (gpa = 0 OR gpa = 1),
     FOREIGN KEY (user_id) REFERENCES PERSON(id)
 );
-
-drop table person cascade constraints; 
-select * from person;
-/*drop table person;
-drop table course_catalogue;
-drop table course;
-drop table groups;
-drop table forums;
-drop table threads;*/
