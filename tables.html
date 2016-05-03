@@ -1,4 +1,4 @@
-<!-- This HTML focuses on assigning moderators  --> 
+<!-- This HTML focuses on showing all the tables --> 
 <!DOCTYPE HTML>
 <html> 
     <head>
@@ -45,7 +45,7 @@
             ';
         
         // Queries for data to be shown 
-        $id = oci_parse($conn, 'SELECT id, name, username, password, year_begin, semester_begin, d_status, d_type, gpa, role, hide_profile FROM PERSON ORDER BY ID ASC');
+        $id = oci_parse($conn, 'SELECT id, name, username, password, year_begin, semester_begin, d_status, d_type, gpa, role, hide_profile FROM PERSON ORDER BY ROLE, NAME ASC');
         oci_execute($id, OCI_DEFAULT);
 
         // This queries data 
@@ -144,10 +144,8 @@
             <tr> 
                 <!-- Columns --> 
                 <th>Group ID</th>
-                <th>Group Name ID</th>
+                <th>Group Name</th>
                 <th>Description</th>
-                <th>Moderator 1</th>
-                <th>Moderator 2</th>
                 <th>Course ID</th>
                 <th>Type</th>  
             </tr>
@@ -164,13 +162,68 @@
                     <td>' . $row['GROUP_ID'] . '</td>
                     <td>' . $row['NAME'] . '</td>
                     <td>' . $row['DESCRIPTION'] . '</td>
-                    <td>' . $row['MODERATOR1'] . '</td>
-                    <td>' . $row['MODERATOR2'] . '</td>
                     <td>' . $row['COURSE_ID'] . '</td>
                     <td>' . $row['TYPE'] . '</td>
                 </tr>';
         }
         echo '</table>';
+
+        /**************/
+        /* MODERATORS */
+        /**************/
+        
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">MODERATORS</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Person ID</th>
+                <th>Group ID</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM MODERATORS');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['P_ID'] . '</td>
+                    <td>' . $row['GROUP_ID'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
+        /*****************/
+        /* GROUP MEMBERS */
+        /*****************/
+        
+        echo '<h3 style="color:white; margin-left:2%; font-size: 25px; text-decoration: underline;">GROUP MEMBERS</h3>';
+        echo '<table style = "color:white; width:100%; text-align: center; text-decoration:none; " >
+            <!-- Row -->
+            <tr> 
+                <!-- Columns --> 
+                <th>Person ID</th>
+                <th>Group ID</th>
+            </tr>
+            ';
+        
+        // Queries for data to be shown 
+        $id = oci_parse($conn, 'SELECT * FROM GROUP_MEMBERS');
+        oci_execute($id, OCI_DEFAULT);
+
+        // This queries data 
+        while(($row=oci_fetch_assoc($id))!=false){
+            echo
+                '<tr>
+                    <td>' . $row['P_ID'] . '</td>
+                    <td>' . $row['GROUP_ID'] . '</td>
+                </tr>';
+        }
+        echo '</table>';
+
 
         /******************/
         /* ADMINISTRATORS */
