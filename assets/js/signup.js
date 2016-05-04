@@ -5,7 +5,7 @@ $(function(){
 		$.post("/assets/php/getUser.php", $(this).serialize())
 			.success(function(response){
 				if(response.error == 0){
-					window.location.href = "/index.html"; 
+					window.location.href = "/assets/php/userManagerExample.php"; 
 				}else{
 					alert("no user matched");
 				}
